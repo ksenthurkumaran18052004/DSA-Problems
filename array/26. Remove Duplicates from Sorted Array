@@ -1,0 +1,25 @@
+
+Create hashmap ,then put elements into it, take unique keys from hashmap and put in array, return the array size
+
+as for leetcode, rewrite the array at the end
+
+
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int n = nums.length;
+        HashMap <Integer, Integer> numMap = new HashMap<>();
+        for(int num:nums){
+            numMap.put(num, numMap.getOrDefault(num,0)+1);
+        }
+        
+        List<Integer> uniqKeys = new ArrayList<>(numMap.keySet());
+        Collections.sort(uniqKeys);
+
+        for(int i=0;i<uniqKeys.size();i++){
+            nums[i]=uniqKeys.get(i);
+        }
+
+        return  uniqKeys.size();
+
+    }
+}
