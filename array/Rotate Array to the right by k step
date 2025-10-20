@@ -1,0 +1,38 @@
+
+The efficient trick — Reverse method 🔁
+
+Instead of rotating one-by-one (which is slow for large arrays), we can reverse parts of the array cleverly.
+
+Idea:
+
+To rotate right by k steps:
+
+Reverse the entire array -> reverse(nums,0,n-1);
+→ [7,6,5,4,3,2,1]
+Reverse the first k elements -> reverse(nums,0,k-1);
+→ [5,6,7,4,3,2,1]
+Reverse the rest of the array -> reverse(nums,k,n-1);
+→ [5,6,7,1,2,3,4]
+
+
+
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int n=nums.length;
+        k=k%n;
+        reverse(nums,0,n-1);
+        reverse(nums,0,k-1);
+        reverse(nums,k,n-1);
+    }
+
+    public void reverse(int[] nums, int start, int end){
+        while(start<end){
+            int temp =nums[start];
+            nums[start]=nums[end];
+            nums[end]=temp;
+            start++;
+            end--;
+        }
+    }
+}
+
