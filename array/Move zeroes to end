@@ -1,0 +1,69 @@
+Code 1:
+
+
+
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int n = nums.length;
+        List<Integer> arr = new ArrayList<>();
+        int num_zeroes= 0;
+        for(int num:nums){
+            if(num!=0){
+                arr.add(num);
+            }
+            if(num==0){
+                num_zeroes+=1;
+            }
+        }
+        for(int i=0;i<num_zeroes;i++){
+            arr.add(0);
+        }
+        
+        for(int i=0;i<arr.size();i++){
+            nums[i]=arr.get(i);
+        }
+    }
+}
+
+
+Code 2:
+
+1. ConceptinsertPos: This pointer tracks the next available position to place a non-zero element. 
+It starts at index 0.i: This pointer iterates through the entire array, checking every number.
+
+2. The Two-Step ProcessStep 
+    1: Move Non-Zero ElementsIterate through the array with i. 
+      Every time you encounter a non-zero number:Place it at nums[insertPos].
+      Increment insertPos to prepare for the next non-zero number.
+      After this step, all non-zero elements are guaranteed to be at the beginning of the array, in their correct relative order. 
+      The index insertPos now points to the first spot that must be a zero.
+
+Step 2: Fill the Remaining Spots with ZerosStart a second loop (or continue from insertPos) and fill every position from insertPos up to the end of the array with $0$.
+
+
+
+class Solution {
+    public void moveZeroes(int[] nums) {
+        // Pointer to track the position where the next non-zero element should be placed
+        int insertPos = 0;
+        
+        // --- Step 1: Move all non-zero elements to the front ---
+        // 'i' is the iterating pointer
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] != 0) {
+                // If the element is non-zero, place it at the insert position
+                nums[insertPos] = nums[i];
+                // Move the insert position forward
+                insertPos++;
+            }
+            // If the element is zero, we do nothing; 'insertPos' remains the same.
+        }
+        
+        // --- Step 2: Fill the remaining elements with zeros ---
+        // 'insertPos' is now pointing to the first spot that needs a zero.
+        while (insertPos < nums.length) {
+            nums[insertPos] = 0;
+            insertPos++;
+        }
+    }
+}
