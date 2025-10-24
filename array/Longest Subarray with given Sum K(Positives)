@@ -1,0 +1,31 @@
+We iterate over all possible starting indices of subarrays using left.
+
+For each left, we initialize sum = 0 and then extend the subarray by moving right from left to the end of the array.
+
+At each step, we keep a running total of the subarray’s sum.
+
+If the current subarray sum is divisible by k (i.e., sum % k == 0), we update maxLen with the length of this subarray (right - left + 1).
+
+After checking all possible subarrays, we return the maximum length found
+
+
+// User function Template for Java
+
+class Solution {
+    int longestSubarrayDivK(int[] arr, int k) {
+        // Complete the function
+        int n= arr.length;
+        int maxlen=0;
+        
+        for(int left=0;left<n;left++){
+            int sum=0;
+            for(int right=left;right<n;right++){
+                sum+=arr[right];
+                if(sum%k==0){
+                    maxlen=Math.max(maxlen, right-left+1);
+                }
+            }
+        }
+        return maxlen;
+    }
+}
