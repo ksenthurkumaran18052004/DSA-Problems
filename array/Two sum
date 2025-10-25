@@ -1,0 +1,25 @@
+Q) Two sum- Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+Create a hashmap  -> interate through the array, take num, target-num as renum, check if renum is in hashmap, if not -> put answer ans[0] as renum and ans[1] as its index,
+if it exists, update the map
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        HashMap <Integer, Integer> map =new HashMap<>();
+        int[] ans = new int[2];
+        int n= nums.length;
+        for(int i=0;i<n;i++){
+            int num=nums[i];
+            int renum = target-num;
+            
+            if(map.containsKey(renum)){
+                ans[0]=map.get(renum);
+                ans[1]=i;
+            }
+            else{
+                map.put(num,i);
+            }
+        }
+        return ans;
+    }
+}
