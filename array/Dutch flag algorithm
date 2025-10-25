@@ -1,0 +1,55 @@
+Explanation:
+
+🧠 Algorithm Steps
+
+Start with: 
+          low = 0
+          mid = 0
+          high = n - 1
+
+
+While mid <= high:
+    If nums[mid] == 0 → put it in the 0s section:
+        swap nums[low] and nums[mid]
+        increment both low and mid
+
+    If nums[mid] == 1 → already in the correct region:
+        just increment mid
+
+    If nums[mid] == 2 → put it in the 2s section:
+        swap nums[mid] and nums[high]
+        decrement high
+
+⚠️ do NOT increment mid here, because the swapped element (from high) might still be 0 or 1 and needs to be checked.
+
+
+class Solution {
+    public void sortColors(int[] nums) {
+        int n = nums.length;
+        int low=0; int mid = 0; int high = nums.length-1;
+
+        while(mid<=high){
+            if(nums[mid]==0){
+                swap(nums,low,mid);
+                low++;
+                mid++;
+            }
+
+            else if(nums[mid]==1){
+                mid++;
+            }
+
+            else if(nums[mid]>1){
+                swap(nums,mid,high);
+                high--;
+            }
+        }
+
+    }
+
+    public void swap(int[] nums,int i, int j){
+        int temp = nums[i];
+        nums[i]=nums[j];
+        nums[j]=temp;
+    }
+}
