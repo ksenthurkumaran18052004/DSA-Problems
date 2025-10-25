@@ -1,1 +1,76 @@
+Q Majority Element - Given an array nums of size n, return the majority element.
 
+The majority element is the element that appears more than ⌊n / 2⌋ times. You may assume that the majority element always exists in the array.
+
+Solution:
+
+General Method:
+
+Explanaton: Put the elemensts and the count in hashmap and then get highest count element
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n= nums.length;
+        HashMap <Integer, Integer> map = new HashMap<>();
+        for(int num:nums){
+            map.put(num,map.getOrDefault(num,0)+1);
+        }
+        for(Map.Entry<Integer,Integer> entry: map.entrySet()){
+            if(entry.getValue()>n/2){
+                return entry.getKey();
+            }
+        }
+        return -1;
+  }
+}
+
+
+Optimized: Boyre Moore Algorithms
+
+Explanation:
+
+        Boyer–Moore Voting Algorithm
+
+        🧩 Key Idea
+
+        If an element occurs more than half the time,
+        then even if we cancel it out with all the other different elements,
+        it will still remain in the end.
+
+        So, the algorithm cancels out different numbers pair by pair.
+
+⚙️ Algorithm Steps
+
+    We keep two variables:
+    candidate → the current majority candidate
+    count → the count of how strongly we “believe” in that candidate
+
+    Algorithm:
+
+        Start with count = 0 and no candidate.
+        Loop through each number num in nums:
+            If count == 0: set candidate = num (new possible majority)
+            If num == candidate: increment count
+            Else: decrement count
+      After the loop, candidate is the majority element.
+
+class Solution {
+    public int majorityElement(int[] nums) {
+
+        int n= nums.length;
+        int candidate=0;
+        int count=0;
+        for(int i=0;i<n;i++){
+            if(count==0){
+                candidate=nums[i];
+            }
+            if(candidate==nums[i]){
+                count++;
+            }
+            else{
+                count--;
+            }
+        }
+        return candidate;
+    }
+}
