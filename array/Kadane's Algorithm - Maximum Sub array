@@ -1,0 +1,54 @@
+53. Maximum Subarray - Given an integer array nums, find the subarray with the largest sum, and return its sum.
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+        int n=nums.length;
+        int current_sum=0;
+        int max_sum = Integer.MIN_VALUE;
+
+        for(int num:nums){
+            current_sum+=num;
+            if(current_sum>max_sum){
+                max_sum=current_sum;
+            }
+            if(current_sum<0){
+                current_sum=0;
+            }
+        }
+        return max_sum;
+    }
+}
+
+
+with subarray
+class Solution {
+    public int maxSubArray(int[] nums) {
+        
+        int n=nums.length;
+        int current_sum=0;
+        int max_sum = Integer.MIN_VALUE;
+        int start=0; int end =0; int s=0;
+
+        for(int i=0;i<n;i++){
+            if(nums[i]>current_sum+nums[i]){
+                current_sum=nums[i];
+                s=i;
+            }
+            else{
+                current_sum+=nums[i];
+            }
+
+            if(current_sum>max_sum){
+                max_sum=current_sum;
+                start=s;
+                end=i;
+            }
+        }
+        int[] subarray= new int[end-start+1];
+        for(int i=start;i<end;i++){
+            subarray[i-start]=nums[i];
+        }
+
+        return max_sum, subarray;
+    }
+}
