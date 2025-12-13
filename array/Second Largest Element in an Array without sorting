@@ -1,0 +1,23 @@
+Step 1 :  Initialize largest and second largest elements
+Step 2: if new largest is found, set it and before that set second largest as previous largest
+
+class Solution {
+    public int getSecondLargest(int[] arr) {
+        // code here
+        int n=arr.length;
+        int max = arr[0];
+        int sec = -1;
+            
+        for(int j=0;j<n;j++){
+            if(arr[j]>max){
+                sec=max;
+                max=arr[j];
+            }
+            else if(arr[j]<max && arr[j]>sec){
+                sec=arr[j];
+            }
+        }
+
+        return sec;
+    }
+}
