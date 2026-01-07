@@ -23,32 +23,36 @@ class Solution {
 with subarray
 class Solution {
     public int maxSubArray(int[] nums) {
-        
-        int n=nums.length;
-        int current_sum=0;
-        int max_sum = Integer.MIN_VALUE;
-        int start=0; int end =0; int s=0;
+        int max = Integer.MIN_VALUE;
+        int sum = 0;
 
-        for(int i=0;i<n;i++){
-            if(nums[i]>current_sum+nums[i]){
-                current_sum=nums[i];
-                s=i;
-            }
-            else{
-                current_sum+=nums[i];
+        int start = 0;
+        int ansStart = 0;
+        int ansEnd = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+
+            if (sum > max) {
+                max = sum;
+                ansStart = start;
+                ansEnd = i;
             }
 
-            if(current_sum>max_sum){
-                max_sum=current_sum;
-                start=s;
-                end=i;
+            if (sum < 0) {
+                sum = 0;
+                start = i + 1;
             }
         }
-        int[] subarray= new int[end-start+1];
-        for(int i=start;i<end;i++){
-            subarray[i-start]=nums[i];
-        }
 
-        return max_sum, subarray;
+        // Print subarray
+        System.out.print("Maximum Subarray: ");
+        for (int i = ansStart; i <= ansEnd; i++) {
+            System.out.print(nums[i] + " ");
+        }
+        System.out.println();
+
+        return max;
     }
 }
+
