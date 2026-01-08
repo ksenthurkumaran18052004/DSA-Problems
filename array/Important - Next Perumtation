@@ -18,37 +18,40 @@ After that find the smallest element from right side of dip element which is big
 After that reverse the elements after it.
 
 Code:
-
 class Solution {
     public void nextPermutation(int[] nums) {
-        int n=nums.length;
+        int n= nums.length;
         int i=n-2;
-        while(i>=0 && nums[i] >= nums[i+1]){ // traverse from right -> left
-            i--; // found dip index
+
+        while(i>=0 && !(nums[i+1]>nums[i])){
+            i--; // We are finding dip index continuosly from right
         }
 
+        // FInding smallest element from the right side of the dip element which is bigger than the dip element and swap it
+
         if(i>=0){
-            int j=n-1;
-            while(nums[j]<=nums[i]){
+            int j=n-1;   // searching from right side of the dip
+            while(!(nums[j]>nums[i])){
                 j--;
             }
             swap(nums,i,j);
         }
 
+        // Step 3 : reverse the elements after the dip
         reverse(nums,i+1,n-1);
     }
 
     public void swap(int[] nums, int i, int j){
-        int temp = nums[i];
+        int temp=nums[i];
         nums[i]=nums[j];
-        nums[j]=temp;
+        nums[j] = temp;
     }
 
-    public void reverse(int[] nums, int start, int end){
-        while(start<end){
-            swap(nums, start, end);
-            start++;
-            end--;
+    public void reverse(int[] nums, int i, int j){
+        while(i<j){
+            swap(nums,i,j);
+            i++;
+            j--;
         }
     }
 }
