@@ -1,0 +1,25 @@
+Q) Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+
+    A subarray is a contiguous non-empty sequence of elements within an array.
+
+
+Code:
+
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int n= nums.length;
+        HashMap <Integer, Integer> map = new HashMap<>();
+
+        map.put(0,1);
+        int prsum=0; int count=0;
+
+        for(int num:nums){
+            prsum+=num;
+            if(map.containsKey(prsum-k)){
+                count+=map.get(prsum-k);
+            }
+            map.put(prsum,map.getOrDefault(prsum,0)+1);
+        }
+        return count;
+    }
+}
