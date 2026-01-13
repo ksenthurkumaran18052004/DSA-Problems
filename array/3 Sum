@@ -1,0 +1,57 @@
+15. 3Sum
+
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+Notice that the solution set must not contain duplicate triplets.
+
+Explanation:
+
+First, create a set with List in it to store unique elements in it.
+Next start fiterating using the first loop. 
+Then before starting the second loop, make a hashset to note the elements of the second loop that we are going to iterate.
+This is becuase int hte second loop, the pointer, ie; j, will change, so to keep track of j- that is if we have seen it before or not we need this.
+
+In the second loop , calculate the third element -> -(arr[i]+arr[j]).
+
+Next we will check with the hashSet if we have seen this element before cause this could be over third element.
+if it exists, 
+put all the 3 elements to a temporary list, sort it and add it to the Ans list (ar top one).
+also at the end add the j element to hashset.
+
+return th Set<List>> as an ArrayList
+
+Code:
+
+class Solution {
+    // Function to find triplets with sum zero
+    public List<List<Integer>> threeSum(int[] arr, int n) {
+        // Store unique triplets
+        Set<List<Integer>> ans = new HashSet<>();
+
+        // First loop for first element
+        for (int i = 0; i < n; i++) {
+            // Set to store elements seen in this iteration
+            Set<Integer> hashset = new HashSet<>();
+
+            // Second loop for second element
+            for (int j = i + 1; j < n; j++) {
+                // Calculate third element needed
+                int third = -(arr[i] + arr[j]);
+
+                // If third already in set, we found a triplet
+                if (hashset.contains(third)) {
+                    List<Integer> temp = Arrays.asList(arr[i], arr[j], third);
+                    Collections.sort(temp);
+                    ans.add(temp);
+                }
+
+                // Add current element to set
+                hashset.add(arr[j]);
+            }
+        }
+
+        // Convert set to list
+        return new ArrayList<>(ans);
+    }
+}
+
+ 
