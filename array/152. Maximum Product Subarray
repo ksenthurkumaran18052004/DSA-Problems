@@ -1,0 +1,47 @@
+Q) 152. Maximum Product Subarray
+Given an integer array nums, find a subarray that has the largest product, and return the product.
+Note that the product of an array with a single element is the value of that element.
+
+Explanation:
+
+We have to iterate the array from both sides to find the presence of -ve element's impact on it.
+next we have to consider the presence of element '0' in it to find if the prod is going to be 0;
+
+initialize 2 values, prefix and suffix. Start iterating the array from left to right.
+Now multiply prefix values with the numbers we encounter.
+Similarly multiply suffix values from right to left side  arr[n-i-1].
+
+Next if we encounter 0, we need to consider it as a seperate sub array
+[-2,3,4,5,0,4,4,2,0,2,5,6]
+_________   ______  ______
+like these we have 3 subarrays 
+in that we shall calculate the prefix ans suffix, since we cannot have many loops, we are resetting the prefix and suffix values back to 1, 
+if prefix becomes 0 or suffix becomes 0
+then finally take maximum of prefix or suffix an then replace with ans (take maximum value).
+
+Code:
+
+class Solution {
+    public int maxProduct(int[] nums) {
+        int n=nums.length;
+        int prefix=1; int suffix =1;
+        int max=Integer.MIN_VALUE;
+
+        for(int i=0;i<n;i++){
+
+            if(prefix==0){
+                prefix=1;
+            }
+            if(suffix==0){
+                suffix=1;
+            }
+
+            prefix *= nums[i];
+            suffix*=nums[n-i-1];
+
+            max=Math.max(max,Math.max(prefix,suffix)) ;
+        }
+        return max;
+
+    }
+}
