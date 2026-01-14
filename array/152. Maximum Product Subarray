@@ -14,10 +14,21 @@ Similarly multiply suffix values from right to left side  arr[n-i-1].
 Next if we encounter 0, we need to consider it as a seperate sub array
 [-2,3,4,5,0,4,4,2,0,2,5,6]
 _________   ______  ______
+
 like these we have 3 subarrays 
 in that we shall calculate the prefix ans suffix, since we cannot have many loops, we are resetting the prefix and suffix values back to 1, 
 if prefix becomes 0 or suffix becomes 0
+Prefix scan can effectively remove a negative element from the RIGHT end of a subarray,
+while suffix scan can effectively remove a negative element from the LEFT end of a subarray.
 then finally take maximum of prefix or suffix an then replace with ans (take maximum value).
+
+Key IDEA:
+
+When the number of negative elements in a subarray is odd, the total product becomes negative.
+To obtain the maximum product in such cases, we must remove one negative element — either:
+from the left side of the subarray, or
+from the right side of the subarray.
+Since we do not know in advance which removal gives the maximum product, we compute products in both directions.
 
 Code:
 
