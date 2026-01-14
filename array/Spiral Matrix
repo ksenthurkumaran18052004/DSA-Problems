@@ -1,0 +1,89 @@
+Q) Spiral Matrix
+
+Explanation:
+
+The task is to return all elements of a matrix in spiral order, starting from the top-left corner and moving clockwise.
+To achieve this, we process the matrix layer by layer, shrinking the boundaries after completing each direction.
+
+Key Idea:
+  At any point, the unvisited part of the matrix is bounded by four pointers:
+
+  top → first unvisited row
+  bottom → last unvisited row
+  left → first unvisited column
+  right → last unvisited column
+
+  We traverse the matrix in four directions using these boundaries and update them after each traversal.
+
+Approach:
+
+  Initialize four boundaries:
+    top = 0, bottom = m - 1
+    left = 0, right = n - 1
+
+  Continue looping while:
+  top <= bottom AND left <= right  (This ensures we stay within valid bounds.)
+
+  Traverse in the following order:
+
+    a. Left to Right (top row)
+        Traverse from left to right on row top
+        Increment top after traversal
+
+    b. Top to Bottom (right column)
+        Traverse from top to bottom on column right
+        Decrement right after traversal
+     
+    This step is done only if top <= bottom
+    c. Right to Left (bottom row)
+        Traverse from right to left on row bottom
+        Decrement bottom after traversal
+
+    This step is done only if left <= right
+    d. Bottom to Top (left column)
+        Traverse from bottom to top on column left
+        Increment left after traversal
+
+Code:
+
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List result = new ArrayList<>();
+        int m=matrix.length; int n=matrix[0].length;
+
+        int left=0; int right=n-1;
+        int top=0; int bottom = m-1;
+
+        while(top<=bottom && left<=right){
+            
+            // left to right
+            for(int i=left;i<=right;i++){
+                result.add(matrix[top][i]);
+            }
+            top++;
+
+            // top to bottom
+            for(int i=top;i<=bottom;i++){
+                result.add(matrix[i][right]);
+            }
+            right--;
+
+            // right to left
+            if(top<=bottom){
+                for(int i=right;i>=left;i--){
+                    result.add(matrix[bottom][i]);
+                }
+                bottom--;
+            }   
+
+            // bottom to top
+            if(left<=right){
+                for(int i=bottom;i>=top;i--){
+                    result.add(matrix[i][left]);    
+                }
+                left++;
+            }
+        }
+        return result;
+    }
+}
