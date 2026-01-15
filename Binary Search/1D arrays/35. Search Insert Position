@@ -1,0 +1,63 @@
+35. Search Insert Position
+
+Given a sorted array of distinct integers and a target value, return the index if the target is found. 
+If not, return the index where it would be if it were inserted in order.
+
+You must write an algorithm with O(log n) runtime complexity.
+
+Explanation:
+
+start with the prcedure of binary search in arrays.
+create a boolean variable called exists and set it to false;
+run a for loop to check its existance.if exists set it to true
+
+then create int exists. Run a 2 pointer left right approach to check the array. \
+int mid=(left+right)/2;
+
+if mid>target: move right to mid-1 position. 
+else if mid<target: move left to mid+1 positon.
+
+now here's the catch- to find out where the element could possibly fit in, we need to check the positon.
+Any element usually fits in if there is no space between the left and right - which means right-left<=1.
+This <= in it is becuase left and right could possibly overlap each other.
+so if it is the case for nums[mid]>target, possbile should be left
+if is it nums[mid]<target, possbile should be right+1.
+
+
+Code:
+
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        int left=0;
+        int n=nums.length;
+        int right=n-1;
+        boolean exists = false;
+        for(int i=0;i<n;i++){
+            if(nums[i]==target){
+                exists=true;
+                return i;
+            }
+        }
+        
+        int possible=0;
+        if(!exists){
+            while(left<=right){
+                int mid=(left+right)/2;
+
+                if(nums[mid]>target){
+                    right=mid-1;
+                    if(right-left<=1){
+                        possible=left;
+                    }
+                }
+                else if(nums[mid]<target){
+                    left=mid+1;
+                    if(right-left<=1){
+                        possible=right+1;
+                    }
+                }
+            }
+        }
+        return possible;
+    }
+}
