@@ -1,0 +1,96 @@
+34. Find First and Last Position of Element in Sorted Array
+
+Given an array of integers nums sorted in non-decreasing order, find the starting and ending position of a given target value.
+If target is not found in the array, return [-1, -1].
+You must write an algorithm with O(log n) runtime complexity.
+
+Explanation:
+
+🎯 What are we trying to find?
+For searchRange we want two different things:
+1️⃣ First occurrence of target
+2️⃣ Last occurrence of target
+
+These are two different goals.
+🔍 Normal binary search mindset -> Binary search normally answers only this question:
+            ❓ Does the target exist?
+            Once you find it, you stop.
+            But here we want positions, not existence.
+
+🧠 Key idea (MOST IMPORTANT)
+When nums[mid] == target, mid is a valid answer, but it may not be the first or last one.
+So you save mid and keep searching.
+
+🟦 Case 1: Finding the FIRST occurrence
+Question we ask:
+“Could there be another target before this index?”
+Example
+[5, 7, 7, 8, 8, 10]
+           ↑
+          mid = 4 (value = 8)
+
+Is this the first 8?
+❌ No — there is another 8 at index 3  👉 So we must search LEFT
+That’s why:
+right = mid - 1;   // move LEFT
+
+We already stored mid as a possible answer.
+Now we discard the right half and check if there’s an earlier one.
+
+🟩 Case 2: Finding the LAST occurrence
+Question we ask: “Could there be another target after this index?”
+
+Same example
+[5, 7, 7, 8, 8, 10]
+          ↑
+      mid = 3 (value = 8)
+
+Is this the last 8? ❌ No — there is another 8 at index 4 👉 So we must search RIGHT
+That’s why: left = mid + 1;   // move RIGHT
+
+We already stored mid as a possible answer.
+Now we discard the left half and look for a later one.
+
+
+Code:
+  class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        int[] arr= {-1,-1};
+        int n=nums.length;
+
+        if(n==0){
+            return arr;
+        }
+
+        int left=0; int right=n-1;
+        while(left<=right){
+            int mid=(left+right)/2;
+            if(nums[mid]==target){
+                arr[0]=mid;
+                right=mid-1;
+            }
+            else if(nums[mid]>target){
+                right=mid-1;
+            }
+            else if(nums[mid]<target){
+                left=mid+1;
+            }
+        }
+
+         left=0;  right=n-1;
+        while(left<=right){
+            int mid=(left+right)/2;
+            if(nums[mid]==target){
+                arr[1]=mid;
+                left=mid+1;
+            }
+            else if(nums[mid]>target){
+                right=mid-1;
+            }
+            else if(nums[mid]<target){
+                left=mid+1;
+            }
+        }
+        return arr;
+    }
+}
