@@ -1,0 +1,81 @@
+153. Find Minimum in Rotated Sorted Array
+Suppose an array of length n sorted in ascending order is rotated between 1 and n times. 
+For example, the array nums = [0,1,2,4,5,6,7] might become:
+[4,5,6,7,0,1,2] if it was rotated 4 times.
+[0,1,2,4,5,6,7] if it was rotated 7 times.
+Notice that rotating an array [a[0], a[1], a[2], ..., a[n-1]] 1 time results in the array [a[n-1], a[0], a[1], a[2], ..., a[n-2]].
+Given the sorted rotated array nums of unique elements, return the minimum element of this array.
+You must write an algorithm that runs in O(log n) time.
+
+Explanation:
+
+🧠 Core Mental Model (THIS is the logic)
+Key Truth:
+  In a rotated sorted array with distinct elements:
+  At any time, at least one half of the array is fully sorted.
+
+Your Way of Thinking (High-Level)
+You are doing three things repeatedly:
+  1️⃣ Identify which half is sorted
+      You check: nums[left] <= nums[mid]
+      If this is true → left half is sorted
+      Else → right half is sorted
+
+  2️⃣ Extract guaranteed information from the sorted half
+
+      Here is the crucial idea: The minimum of a sorted half is its first element.
+      So: 
+        If left half is sorted → minimum is nums[left]
+        If right half is sorted → minimum is nums[mid]
+        You safely compare it with your current min.
+
+  3️⃣ Discard the sorted half
+
+      Why can we throw it away?
+      Because:
+          You already considered its minimum
+          If a smaller value exists, it must be in the unsorted half
+          So you move pointers to search only the unsorted part.
+
+          This is why the search space keeps shrinking.
+
+🧩 Visual Intuition
+Example:
+
+[4,5,6,7,0,1,2]
+ L       M   R
+
+Left half is sorted → min is 4
+But smaller values may exist → search right half
+[0,1,2]
+Again sorted → min is 0 → done
+
+🔁 Loop Invariant (VERY IMPORTANT)  
+  “At every iteration, min stores the smallest value seen so far,
+  and the remaining search space still may contain the true minimum.”
+
+  This invariant is never violated.
+
+Code:
+
+class Solution {
+    public int findMin(int[] nums) {
+        int n=nums.length;
+        int left=0; int right=n-1;
+
+        int min=nums[0];
+        
+        while(left<=right){
+            int mid=(left+right)/2;
+            if(nums[left]<=nums[mid]){
+                min=Math.min(min,nums[left]);
+                left=mid+1;
+            }
+            else{
+                min=Math.min(min,nums[mid]);
+                right=mid-1;
+            }
+        }
+        return min;
+    }
+}
