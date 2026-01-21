@@ -7,7 +7,11 @@ Return the minimum integer k such that she can eat all the bananas within h hour
 
 Explanation:
 
-THe ideology behind is there is an array of bananans. Each element in the array 
+THe ideology behind is there is an array of bananans. Each element in the array is the pile of bananas available.
+what we do is we have to find the rate of time it takes to eat all the bananas such that it is less than h.
+
+For that what we do is we setup an imaginary array where we have the langest possble time (that is eating the maximum piles in the array) and shorted time( which is 1).
+We use binary search, take out the mid element as the assumed rate of bananas, calculate the total time based on it and comparing it with h.
 
 Code:
 
