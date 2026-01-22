@@ -1,0 +1,73 @@
+1011. Capacity To Ship Packages Within D Days
+
+A conveyor belt has packages that must be shipped from one port to another within days days.
+The ith package on the conveyor belt has a weight of weights[i]. 
+Each day, we load the ship with packages on the conveyor belt (in the order given by weights). 
+We may not load more weight than the maximum weight capacity of the ship.
+Return the least weight capacity of the ship that will result in all the packages on the conveyor belt being shipped within days days.
+
+Explanation:
+
+We dont know the number of days required to ship these weights with given capacity .
+(Whatever capacity we are considering we dont know how long will it take to ship). 
+First calculate it becuase with that only we can compare with the threshold days.
+The core logic lies in finding the number of days it takes with the given capacity.
+
+Starting of find the actual days needed. set it as number of daysto 1 and current load to 0;
+if the current_load+ weight[i] < capacity then add more weight
+else > capacity, then move weight[i] to the next day and increament day count (days++);
+return days;
+
+with this we know the number of days for a given weight.
+
+Next comnsider all the weights.
+left set as ->This is the max weight of weights because we need minimum this weight to ship it individually
+right set as -> This is the sum of weight of all weights. If we are carrying all in a single day
+imaginary array of the possible weights.
+Apply BS on these possible weights, check with mid. 
+If actuall_days_needed(weights,mid)<=days, ans=mid and reduce right to mid-1 cause anything above than 'mid''s weight's days will do it.
+else left=mid+1;
+
+Code:
+class Solution {
+    public int shipWithinDays(int[] weights, int days) { // function for min_weight
+        int left=-1; // This is the max weight of weights because we need minimum this weight to ship it individually
+
+        for(int weight:weights){
+            left=Math.max(left,weight);
+        }
+
+        int right= 0; // This is the sum of weight of all weights. If we are carrying all in a single day
+        for(int weight:weights){
+            right+=weight;
+        }
+
+        int ans=-1;
+
+        while(left<=right){
+            int mid=(left+right)/2; // Capacity considering now
+            if(actuall_days_needed(weights,mid)<=days){
+                ans=mid;
+                right=mid-1;
+            }
+            else{
+                left=mid+1;
+            }
+        }
+        return ans;
+    }
+
+    public int actuall_days_needed(int[] weights, int threshold_capacity){
+        int days=1; int load=0;
+        for(int weight:weights){
+            if(load+weight<=threshold_capacity){
+                load+=weight;
+            }
+            else{
+                days++;
+                load=weight;
+            }
+        }
+        return days;
+    }
+}
