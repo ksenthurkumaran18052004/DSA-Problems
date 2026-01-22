@@ -1,0 +1,50 @@
+1283. Find the Smallest Divisor Given a Threshold
+
+Given an array of integers nums and an integer threshold, we will choose a positive integer divisor, divide all the array by it, and sum the division's result. 
+Find the smallest divisor such that the result mentioned above is less than or equal to threshold.
+Each result of the division is rounded to the nearest integer greater than or equal to that element. (For example: 7/3 = 3 and 10/2 = 5).
+
+Explaantion:
+In BS answers qn, some qns need an imaginary array. we need to find the sum 0f ceil(quotient) of every number by dividing with some number.
+That some number is going to be between 1 and the highest number in the array.
+Use BS, and find the mid element that satisfies this.
+If the divisor_sum satisfiers <= threshold, I can say that the number used here is sufficient. High number than this wont make a diffrence.
+So reduce right to mid-1, else increase left to mid+1;
+
+Code:
+class Solution {
+    public int smallestDivisor(int[] nums, int threshold) {
+        int n=nums.length;
+        int left=1; 
+
+        int right=Integer.MIN_VALUE;
+        for(int num:nums){
+            right=Math.max(right,num);
+        } 
+
+        int ans=-1;
+
+        while(left<=right){
+            int mid=(left+right)/2;
+
+            if(divisor_sum(nums,mid)<=threshold){
+                ans=mid;
+                right=mid-1;
+            }
+            else{
+                left=mid+1;
+            }
+        }
+
+        return ans;
+    }
+
+    public int divisor_sum(int[] nums, int d){
+        int n=nums.length;
+        int d_sum=0;
+        for(int num:nums){
+            d_sum+= (num+d-1)/d;
+        }
+        return d_sum;
+    }
+}
