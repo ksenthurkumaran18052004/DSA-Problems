@@ -1,0 +1,83 @@
+Aggressive Cows
+You are given an array with unique elements of stalls[], which denote the positions of stalls. 
+You are also given an integer k which denotes the number of aggressive cows. 
+The task is to assign stalls to k cows such that the minimum distance between any two of them is the maximum possible.
+
+
+Explanation:
+
+🧮 Overall Strategy
+
+  Sort the stall positions
+  Binary search on distance
+  For each mid distance:
+  Check if cows can be placed using a greedy approach
+  Store the largest valid distance
+
+🐄 Greedy Placement Logic (Very Important)
+  To check if a distance d is possible:
+  Place the first cow at the first stall
+  Always place the next cow at the earliest stall that is at least d distance away
+  This greedy choice ensures we place cows as far apart as possible
+  If we can place all k cows → distance d is valid.
+
+
+Logic to check if we can place the cows
+First we place cow 1 at the the 0th index of stalls -> stalls[0] -> this is termed as lastpos. Keep a track of number of cows, so initally count_cows=1;
+run through the stalls array and check if the stalls[i]-lastpos >= d (the distance).
+if so bring lasptos to stalls[i] and increase the count of cows. 
+if all cows are placed , return true, else return false.
+
+Now to find the maximum of maximum distances between cows.
+WHat we have to do is, first identify the range of possible distances. it is from 1 to maximum number in the stalls array of distances.
+then use BS and check the logic to place cows
+if true, the ans=mid and shift left to mid+1 to check the next maximum, else right to mid-1;
+
+
+
+
+Code:
+class Solution {
+    public int aggressiveCows(int[] stalls, int k) {
+        // code here
+        int n=stalls.length;
+        Arrays.sort(stalls);
+        // The ranges of distance will be from 1 -> max distance number in the stalls distances
+        int left=1;
+        int right=stalls[n-1]-stalls[0];
+        
+        int ans=-1;
+        
+        while(left<=right){
+            int mid=(left+right)/2;
+            if(canPlaceCows(stalls,k,mid)==true){
+                ans=mid;
+                left=mid+1;
+            }
+            else{
+                right=mid-1;
+            }
+        }
+        return ans;
+        
+    }
+    
+    public boolean canPlaceCows(int[] stalls, int cows, int d){
+        int n=stalls.length;
+        int lastpos=stalls[0]; 
+        int cows_placed=1; // 1 cow is alread placed at index 0;
+        for(int i=0;i<n;i++){
+            if(stalls[i]-lastpos>=d){
+                cows_placed++;
+                lastpos=stalls[i];
+            }
+        }
+        
+        if(cows_placed>=cows){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+}
