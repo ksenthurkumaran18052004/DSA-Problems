@@ -1,0 +1,41 @@
+1539. Kth Missing Positive Number
+Given an array arr of positive integers sorted in a strictly increasing order, and an integer k.
+Return the kth positive integer that is missing from this array.
+
+Explanation:
+
+We start with the assumption that the k-th missing number is k
+Each time we encounter a value in the array that is ≤ k, it means one missing number is no longer missing
+Therefore, we increment k
+Since we process the array in order, updating k is safe
+
+Code logic:
+Traverse the array from left to right
+If a number in the array is ≤ current k, then the k-th missing number shifts forward by 1
+Update k accordingly
+
+Dry run:
+arr = [2,3,4,7,11], k = 5
+
+2 ≤ 5 → k = 6
+3 ≤ 6 → k = 7
+4 ≤ 7 → k = 8
+7 ≤ 8 → k = 9
+11 > 9 → stop
+
+Answer = 9
+
+
+Code:
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] <= k) {
+                k++;
+            } else {
+                break;
+            }
+        }
+        return k;
+    }
+}
