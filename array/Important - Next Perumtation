@@ -14,7 +14,7 @@ The replacement must be in place and use only constant extra memory.
 Explanation:
 
 start by traversing from right to left, and find the dip index - this is where the number on the right side is greater than left;
-After that find the smallest element from right side of dip element which is bigger than the dip element and swap it.
+After that find the smallest element in the right side of dip element which is bigger than the dip element and swap it.
 After that reverse the elements after it.
 
 Code:
