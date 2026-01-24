@@ -1,7 +1,62 @@
 Q) Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
 
-    A subarray is a contiguous non-empty sequence of elements within an array.
+Explanation;
+🧩 The ONE idea (nothing else)
 
+👉 If you know the total sum till now, and earlier you had a smaller sum,
+the difference between them is a subarray.
+
+That’s it. Full stop.
+
+🧠 Think like this (VERY SIMPLE)
+Imagine you are walking and collecting money.
+prsum = money you have in hand till now
+You remember how much money you had earlier
+
+If:
+money now − money earlier = k
+Then:
+👉 the money you collected between those two moments = k
+
+That “between” part is the subarray.
+
+🧮 Super tiny example
+nums = [1, 2, 1]
+k = 3
+Step 0
+prsum = 0
+map = {0 : 1}   // means "sum 0 happened once"
+count = 0
+Step 1 → take 1
+prsum = 1
+prsum - k = -2 ❌ (not in map)
+
+Store:
+
+map = {0:1, 1:1}
+Step 2 → take 2
+prsum = 3
+prsum - k = 0 ✅ FOUND
+
+Meaning:
+
+3 - 0 = 3  → subarray sum = k
+
+So:
+
+count = 1
+
+Store:
+map = {0:1, 1:1, 3:1}
+Step 3 → take 1
+prsum = 4
+prsum - k = 1 ✅ FOUND
+
+Meaning:
+4 - 1 = 3  → another subarray
+
+So:
+count = 2
 
 Code:
 
