@@ -8,6 +8,7 @@ Explanation:
 Iterate through the array and count -> '('
 Set max as you count
 if you encounter ')', reduce count becuase brackets close
+we update max only becuase we want maximum depth 
 
 Code:
 
