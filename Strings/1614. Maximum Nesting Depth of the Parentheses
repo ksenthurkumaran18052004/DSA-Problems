@@ -1,0 +1,32 @@
+1614. Maximum Nesting Depth of the Parentheses
+Given a valid parentheses string s, return the nesting depth of s. The nesting depth is the maximum number of nested parentheses.
+
+Example 1:
+Input: s = "(1+(2*3)+((8)/4))+1"     Output: 3
+
+Explanation:
+Iterate through the array and count -> '('
+Set max as you count
+if you encounter ')', reduce count becuase brackets close
+
+Code:
+
+class Solution {
+    public int maxDepth(String s) {
+        int max=0;
+        int count=0;
+
+        for(int i=0;i<s.length();i++){
+            char ch = s.charAt(i);
+            if(ch == '('){
+                count++;
+                max=Math.max(count,max);
+
+            }
+            else if(ch==')'){
+                count--;
+            }
+        }
+        return max;
+    }
+}
