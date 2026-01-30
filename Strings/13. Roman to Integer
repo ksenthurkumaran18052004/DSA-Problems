@@ -1,0 +1,38 @@
+13. Roman to Integer
+eExplanation:
+
+Understand that Roman numerals are generally written in descending order of value, and their values are added.
+However, when a smaller value appears before a larger one, it indicates subtraction instead of addition.
+To handle this, scan the string from left to right and compare each character with the one after it.
+If the current symbol is smaller than the next, treat it as a subtractive pair.
+Otherwise, treat the symbol as a standalone value and add it normally.
+The final character is always added since there's nothing after it to compare.
+
+Code:
+class Solution {
+    public int romanToInt(String s) {
+        int result=0;
+        Map <Character, Integer> map = new HashMap<>();
+
+        map.put('I',1);
+        map.put('V',5);
+        map.put('X',10);
+        map.put('L',50);
+        map.put('C',100);
+        map.put('D',500);
+        map.put('M',1000);
+
+        for(int i=0;i<s.length()-1;i++){
+            if(map.get(s.charAt(i))<map.get(s.charAt(i+1))){
+                result-=map.get(s.charAt(i));
+            }
+            else{
+                result+=map.get(s.charAt(i));
+            }
+        }
+
+        result+=map.get(s.charAt(s.length()-1));
+
+        return result;
+    }
+}
