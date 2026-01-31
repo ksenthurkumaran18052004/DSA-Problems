@@ -1,0 +1,38 @@
+1781. Sum of Beauty of All Substrings
+
+The beauty of a string is the difference in frequencies between the most frequent and least frequent characters.
+For example, the beauty of "abaacc" is 3 - 1 = 2. Given a string s, return the sum of beauty of all of its substrings.
+
+Explanation:
+
+Loop through all substrings of the string.
+Maintain a frequency map of characters for each substring.
+For each substring:
+  Find the most frequent character's count.
+  Find the least frequent non-zero character's count.
+  Calculate the difference between the two counts.
+  Add the difference to the running sum.
+
+Code:
+class Solution {
+    public int beautySum(String s) {
+        int result=0;
+
+        for(int i=0;i<s.length();i++){
+            HashMap<Character, Integer> freq = new HashMap<>();
+            for(int j=i;j<s.length();j++){
+                freq.put(s.charAt(j),freq.getOrDefault(s.charAt(j),0)+1);
+
+                int max=Integer.MIN_VALUE;
+                int min=Integer.MAX_VALUE;
+
+                for(int val: freq.values()){
+                    max=Math.max(max,val);
+                    min=Math.min(val,min);
+                }
+                result+=(max-min);
+            }
+        }
+        return result;
+    }
+}
