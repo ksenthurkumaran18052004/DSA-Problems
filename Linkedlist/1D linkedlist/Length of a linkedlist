@@ -1,0 +1,90 @@
+Length of a linkedlist
+
+Explanation that i need to have a clear concept
+✅ Why temp != null and NOT temp.next != null when counting nodes?
+🧠 What Are We Checking?
+
+When counting a linked list, the goal is:
+
+👉 Count every node that EXISTS.
+A node does NOT need a next node to exist.
+Even the last node counts.
+
+⭐ Example
+1 -> 2 -> 3 -> 4 -> 5 -> null
+
+Total nodes = 5
+
+Notice:
+Node 5 exists ✅
+But next is null ❌
+Still — it MUST be counted.
+
+🔥 Understanding Both Conditions
+✅ temp != null
+
+Means:
+👉 “Does THIS node exist?”
+
+Loop visits:
+
+1 ✅
+2 ✅
+3 ✅
+4 ✅
+5 ✅
+null ❌ stop
+
+✔ Correct count = 5
+❌ temp.next != null
+
+Means:
+👉 “Does the NEXT node exist?”
+
+Loop visits:
+
+1 ✅
+2 ✅
+3 ✅
+4 ✅
+5 ❌ (skipped!)
+
+✔ Count becomes 4 → WRONG.
+
+Because the last node has no next.
+
+But it still exists!
+🧠 Golden Rule (VERY IMPORTANT)
+🔥 Always check the node you want to process.
+Want to process EVERY node?
+
+👉 Use:
+temp != null
+Want to stop BEFORE the last node?
+
+👉 Use:
+temp.next != null
+
+
+Code:
+
+/*
+class Node{
+    int data;
+    Node next;
+    Node(int a){  data = a; next = null; }
+}*/
+
+class Solution {
+    public int getCount(Node head) {
+        // code here
+        int count=0;
+        Node temp = head;
+        
+        while(temp!=null){
+            count++;
+            temp=temp.next;
+        }
+        return count;
+    }
+}
