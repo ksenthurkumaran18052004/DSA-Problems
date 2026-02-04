@@ -1,0 +1,90 @@
+206. Reverse Linked List
+
+Explanation:
+
+🧠 Goal
+Reverse the direction of every pointer in the list.
+
+Original:
+1 → 2 → 3 → 4 → null
+
+Reversed:
+4 → 3 → 2 → 1 → null
+
+👉 We are NOT reversing values.
+👉 We are reversing links (arrows).
+
+⭐ Core Idea
+
+Use 3 pointers:
+
+prev → previous node
+curr → current node
+next → next node (saved)
+
+🔥 Golden Rule (MOST IMPORTANT)
+
+👉 SAVE BEFORE YOU BREAK
+
+When you reverse a pointer, you lose the forward connection.
+
+So always store:
+next = curr.next;
+
+first.
+
+✅ Algorithm Steps
+
+Repeat while curr != null:
+
+1️⃣ Save next node
+next = curr.next;
+
+2️⃣ Reverse pointer
+curr.next = prev;
+
+3️⃣ Move prev forward
+prev = curr;
+
+4️⃣ Move curr forward
+curr = next;
+
+⭐ After Loop Ends
+
+curr becomes null.
+
+prev will be pointing to the new head.
+
+👉 Always return:
+
+return prev;
+NOT the old head.
+
+
+Code:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+ 
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode curr = head;
+
+        while(curr!=null){
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev= curr;
+            curr= next;
+        }
+        return prev;
+    }
+}
