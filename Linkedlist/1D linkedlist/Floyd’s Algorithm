@@ -1,0 +1,58 @@
+Floyd’s Algorithm
+🔹 Goal
+  Find the node where the cycle begins in a linked list.
+  If no cycle exists, return null.
+
+✅ Step 1 — Detect the Cycle
+Initialize two pointers:
+slow → moves one step    fast → moves two steps
+✔ If slow == fast   👉 A collision occurred → Cycle detected.
+
+✅ Step 2 — Reset Slow Pointer
+Once slow and fast meet:
+👉 Move slow back to the head of the linked list.
+👉 Keep fast at the collision point.
+
+✅ Step 3 — Move Both Pointers One Step
+Now move both pointers at the same speed:
+
+✔ Why this works?
+The distance from:  HEAD → cycle start = collision point → cycle start
+So both pointers meet exactly at the starting node of the cycle. So return slow which is the collision point
+
+Code:
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow= head;
+        ListNode fast = head;
+
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+
+            if(slow==fast){ // They meet but we dont know the position yet
+                slow= head; // Put slow back to head;
+
+                while(slow!=fast){
+                    slow=slow.next; // move slow and fast one by one , when they meet that is loop location
+                    fast=fast.next;
+                }
+                return slow;
+            }
+        }
+
+        return null;
+    }
+}
