@@ -1,0 +1,37 @@
+234. Palindrome Linked List
+
+Explanation:
+
+Logic:
+
+1️⃣ Traverse once → push all values into stack
+2️⃣ Traverse again from head
+3️⃣ Pop from stack (gives reverse order)
+4️⃣ Compare
+
+If mismatch → false
+Else → palindrome
+
+Code:
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        Stack<Integer> stack = new Stack<>();
+
+        ListNode temp = head;
+        while(temp!=null){
+            stack.push(temp.val);
+            temp=temp.next;
+        }
+
+        temp = head;
+
+        while(temp!=null){
+            if(temp.val!=stack.pop()){
+                return false;
+            }
+            temp=temp.next;
+        }
+
+        return true;
+    }
+}
