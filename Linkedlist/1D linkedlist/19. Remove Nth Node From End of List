@@ -1,0 +1,129 @@
+19. Remove Nth Node From End of List
+
+🚀 Optimal Method — One Pass (Fast & Slow Pointer)
+⭐ Main Idea
+👉 We create a gap of n nodes between two pointers. FAST ---- n nodes ahead ---- SLOW
+
+When FAST reaches the end… 👉 SLOW will be standing just before the node we must delete.
+That is the entire trick.
+
+🔥 MOST IMPORTANT TRICK — Use a Dummy Node
+Why beginners struggle: Deleting the head is annoying.
+Example: 1 → 2 → 3         n = 3
+You must delete 1. But there is no node before it!
+
+Solution:
+
+Create a fake node:  dummy → 1 → 2 → 3
+Now EVEN the head has a previous node 😄   Always use dummy in linked list deletion problems.
+
+✅ Step-by-Step Visualization
+
+Example:
+head = 1 → 2 → 3 → 4 → 5        n = 2
+We must delete 4.
+
+✅ Step 1 — Setup pointers
+dummy → 1 → 2 → 3 → 4 → 5
+ ^ 
+slow, fast both start here
+
+✅ Step 2 — Move FAST first
+Move it n+1 steps.
+Why n+1?
+Because we want:
+👉 slow to stop BEFORE the node to delete.
+
+Let’s move:
+Move 1 → fast at 1
+Move 2 → fast at 2
+Move 3 → fast at 3
+
+Now the gap is correct.
+slow at dummy
+fast at 3
+
+Distance between them = 3 nodes.
+
+✅ Step 3 — Move BOTH together
+
+Now move one step at a time:
+
+Move 1:
+slow → 1
+fast → 4
+
+Move 2:
+slow → 2
+fast → 5
+
+Move 3:
+slow → 3
+fast → null (end!)
+
+STOP.
+
+✅ Step 4 — Delete Node
+
+Currently:
+slow → 3
+slow.next → 4   ❌ delete this
+
+Just do:
+slow.next = slow.next.next;
+
+Now list becomes:
+
+1 → 2 → 3 → 5
+
+DONE ✅
+
+🧠 Why This Works (Important Intuition)
+
+Because FAST was n steps ahead…
+
+When FAST travels the remaining distance to reach NULL…
+
+SLOW automatically lands at:
+
+👉 node_before_target
+
+No counting needed.
+No second traversal.
+
+Just pointer magic 🪄
+
+Code:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next=head;
+
+        ListNode slow = dummy;
+        ListNode fast = dummy;
+
+        for(int i=0;i<n+1;i++){
+            fast=fast.next;
+        }
+
+        while(fast!=null){
+            slow=slow.next;
+            fast=fast.next;
+        }
+
+        slow.next=slow.next.next;
+
+        return dummy.next;
+    }
+}
