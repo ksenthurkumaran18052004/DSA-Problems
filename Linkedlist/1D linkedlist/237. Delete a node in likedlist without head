@@ -2,8 +2,8 @@ Delete a node in likedlist without head
 
 Explanation:
 👉 “If I can’t reach the previous node, I become the next node.”
-✅ Copy the next node’s value
-✅ Skip the next node
+1. Copy the next node’s value into the current given node
+2. Then delete the next node.
 
 Code:
 /**
