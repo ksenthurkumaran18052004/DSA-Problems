@@ -1,0 +1,84 @@
+160. Intersection of Two Linked Lists
+
+⭐ Core problem
+
+Distance to intersection:
+
+A has 3 nodes before intersection
+B has 1 node before intersection
+
+So they are misaligned.
+
+We must align them.
+
+⭐ Genius trick (head switching)
+
+We force both to walk:
+
+A path + B path
+B path + A path
+
+So both walk same total distance.
+
+Now they must meet.
+
+⭐ Step by step visual (MOST IMPORTANT)
+
+Lists:
+
+A: 1 → 2 → 3 → 4 → 5
+B:       9 → 4 → 5
+Start
+a = 1
+b = 9
+Move
+a=2   b=4
+a=3   b=5
+a=4   b=null
+a=5   b=1   ← switched!
+a=null b=2
+a=9   b=3
+a=4   b=4   ← BOOM intersection
+
+They meet.
+
+Because:
+
+👉 Both walked same distance = lenA + lenB
+
+
+Code:
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode a = headA;
+        ListNode b = headB;
+
+        while(a!=b){
+            if(a==null){
+                a=headB;
+            }
+            else{
+                a=a.next;
+            }
+
+            if(b==null){
+                b=headA;
+            }
+            else{
+                b=b.next;
+            }
+        }
+        return a;
+    }
+}
