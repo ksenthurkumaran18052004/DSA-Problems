@@ -1,0 +1,58 @@
+2. Add Two Numbers in linkedlist
+
+Explanation:
+
+first create a dummy node and initiate a new result linkedlist.
+second, make a pointer named temp for the result linkeldist named dummy.
+next set carry =0
+third, the while loop is such that l1!=null or l2!=null or carry!=0 becuase if we reach the end of both the linkedlist, 
+we might still have carry having some value and we may have to put it, so run the loop until carry is not null.
+fourth, in the while loop set sum=0, and check if every node in l1 and l2 is not null, then add the node's value to the sum and got to the next node in the linkedlist.
+
+fifth, after l1 and l2, add the carry to the sum.
+sixth,calculation carry as sum/10 and remainder as sum%10.
+Create a new node and put the remainder value in it and direct it such that temp.next=new node
+then move temp=temp.next;
+
+finally return dummy.next;
+
+
+Code:
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode();
+        ListNode temp = dummy;
+
+        int carry=0;
+        while(l1!=null|| l2!=null || carry!=0){
+            int sum=0;
+
+            if(l1!=null){
+                sum+=l1.val;
+                l1=l1.next;
+            }
+            if(l2!=null){
+                sum+=l2.val;
+                l2=l2.next;
+            }
+            sum+=carry;
+            carry=sum/10;
+            int remainder =  sum%10;
+            ListNode node = new ListNode(remainder);
+            temp.next=node;
+            temp=temp.next;
+        }
+
+        return dummy.next;
+    }
+}
