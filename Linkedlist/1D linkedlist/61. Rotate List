@@ -1,0 +1,54 @@
+61. Rotate List
+Given the head of a linked list, rotate the list to the right by k places.
+
+Explanation:
+Step 1, find the total length of the linkedlist with tail as a pointer and by finding the total length your tail moves to the end of the linkedlist
+step 2, makes this as a circular linkedlist
+step 3, find the effective length to rotate by k=k%length so that we can only jump forward the head to a few places ahead instead of rotating the whole list k times
+step 4, find stepsToNewTail, which is the effective number of steps to move forward which is length-k
+step 5, make a ListNode newTail and move it here stepsToNewTail.
+step 6, make a newHead at newTail.next;
+step 7 , newTail.next=null so that we can break the linkedlist...
+finally return newHead;
+
+
+Code:
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+
+        if(head==null || head.next==null || k==0){
+            return head;
+        }
+
+        int length=1;
+        ListNode tail=head;
+        while(tail.next!=null){
+            tail=tail.next;
+            length++;
+        }
+        tail.next=head;
+        k=k%length;
+        int stepsToNewTail=length-k;
+
+        ListNode newTail=head;
+        for(int i=1;i<stepsToNewTail;i++){
+            newTail=newTail.next;
+        }
+
+        ListNode newHead= newTail.next;
+        newTail.next=null;
+
+        return newHead;
+    }
+}
