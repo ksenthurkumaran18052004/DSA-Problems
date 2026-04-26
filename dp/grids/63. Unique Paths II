@@ -1,0 +1,103 @@
+63. Unique Paths II (DP with Obstacles)
+
+🧠 Problem
+Given an m x n grid:
+
+Start at (0,0)
+Reach (m-1, n-1)
+Moves allowed:
+Right →
+Down ↓
+Some cells have obstacles (1) → cannot pass
+
+👉 Find total unique paths avoiding obstacles
+
+🔑 Core Idea (MOST IMPORTANT)
+
+👉 Think backward
+
+At cell (i, j):
+
+“Where did I come from?”
+
+From top → (i-1, j)
+From left → (i, j-1)
+❗ Twist (Obstacle)
+
+👉 If current cell is obstacle:
+
+dp[i][j] = 0
+
+👉 No path can go through it
+
+🔁 Recurrence
+
+dp[i][j]={0                      if obstacle
+          dp[i−1][j]+dp[i][j−1]  otherwise​
+}
+
+
+🧠 State Definition
+dp[i][j] = number of ways to reach cell (i, j)
+🧩 Base Case
+dp[0][0] = 1 (only if NOT obstacle)
+
+👉 If (0,0) is obstacle → answer = 0
+
+⚠️ Boundary Handling
+if i > 0 → can come from top
+if j > 0 → can come from left
+🧠 Intuition (VERY IMPORTANT)
+
+👉 We do NOT “avoid obstacles manually”
+
+Instead:
+
+Obstacle cell → contributes 0
+Valid cells → sum of valid paths
+🔍 Example Thinking
+
+If:
+
+top = obstacle → dp[i-1][j] = 0
+left = valid   → dp[i][j-1] = x
+
+👉 Then:
+
+dp[i][j] = 0 + x = x
+
+👉 Automatically ignores obstacle
+
+⚙️ DP Construction (Bottom-Up)
+class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+
+        int[][] dp = new int[m][n];
+
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+
+                if(obstacleGrid[i][j] == 1){
+                    dp[i][j] = 0;
+                    continue;
+                }
+
+                if(i == 0 && j == 0){
+                    dp[i][j] = 1;
+                    continue;
+                }
+
+                int up = 0, left = 0;
+
+                if(i > 0) up = dp[i-1][j];
+                if(j > 0) left = dp[i][j-1];
+
+                dp[i][j] = up + left;
+            }
+        }
+
+        return dp[m-1][n-1];
+    }
+}
