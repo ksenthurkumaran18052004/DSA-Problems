@@ -1,0 +1,59 @@
+424. Longest Repeating Character Replacement
+
+You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. 
+You can perform this operation at most k times.
+Return the length of the longest substring containing the same letter you can get after performing the above operations.
+
+Explanation:
+
+Idea:
+Maintain a sliding window.
+
+maxFreq = frequency of most common character in current window.
+
+To make all characters same:
+changesNeeded = windowLength - maxFreq
+
+Valid Window:
+windowLength - maxFreq <= k
+
+Invalid Window:
+windowLength - maxFreq > k
+
+Steps:
+1. Expand r and update frequency.
+2. Maintain maxFreq.
+3. If window becomes invalid, move l forward.
+4. Update max length.
+
+Memory Trick:
+Keep the majority character.
+Change all other characters.
+
+
+Code:
+
+class Solution {
+    public int characterReplacement(String s, int k) {
+        int[] freq=  new int[26];
+
+        int l=0; int r=0;
+        int n = s.length();
+        int maxFreq=0;
+        int maxLen=0;
+
+        while(r<n){
+            
+            freq[s.charAt(r)-'A']++;
+            maxFreq=Math.max(maxFreq,freq[s.charAt(r)-'A']);
+
+            while((r-l+1)-maxFreq>k){
+                freq[s.charAt(l)-'A']--;
+                l++;
+            }
+            maxLen = Math.max(maxLen,(r-l+1));
+            r++;
+        }
+        return maxLen;
+    }
+}
