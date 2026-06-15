@@ -1,0 +1,131 @@
+3. Longest Substring without repeting characters
+
+Explanation:
+First understand the problem
+Input: abcabcbb
+
+Need:
+Longest SUBSTRING
+with no repeated characters
+
+Valid:
+abc
+bca
+cab
+
+Length:
+
+3
+Why not DP?
+
+Because we're dealing with:
+
+Continuous substring
+
+and we want:
+
+Expand
+Shrink
+Expand
+Shrink
+
+This screams:
+
+Sliding Window
+The idea
+
+Maintain a window:
+
+[l .... r]
+
+such that:
+
+No duplicates inside
+
+Example:
+
+abcabcbb
+
+Start:
+
+l=0
+r=0
+
+"a"
+
+Unique.
+
+Length:
+
+1
+
+Move r
+
+"ab"
+
+Unique.
+
+Length:
+
+2
+
+Move r
+
+"abc"
+
+Unique.
+
+Length:
+
+3
+
+Move r
+
+"abca"
+
+Oops.
+
+Duplicate:
+
+a
+
+appears twice.
+
+Now we must shrink from left.
+
+Move:
+
+l++
+
+Window becomes:
+
+bca
+
+Now unique again.
+
+Continue.
+
+
+Code:
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int l=0; int r=0;
+        HashSet <Character> set = new HashSet<>();
+        int maxLength=0;
+        int n = s.length();
+
+        while(r<n){
+            while(set.contains(s.charAt(r))){
+                set.remove(s.charAt(l));
+                l++;
+            }
+
+            set.add(s.charAt(r));
+            maxLength=Math.max(maxLength,r-l+1);
+
+            r++;
+        }
+
+        return maxLength;
+    }
+}
