@@ -1,0 +1,65 @@
+1004. Max Consecutive Ones III
+
+Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
+
+Max Conseive Ones III (Sliding Window)
+
+Idea:
+
+* We do NOT actually flip zeros.
+* Think of a window [l...r].
+* If the number of zeros inside the window is <= k, then all those zeros can be flipped, so the entire window can become all 1s.
+* Therefore, every valid window is a candidate answer.
+
+Steps:
+
+1. Expand r and count zeros in the window.
+2. If zeroCount > k, the window becomes invalid.
+3. Shrink from the left (l++) until zeroCount <= k again.
+4. For every valid window, update:
+   maxLen = max(maxLen, r-l+1)
+
+Key Observation:
+
+* We don't care WHICH zeros are flipped.
+* We only care HOW MANY zeros are inside the current window.
+
+Invalid Condition:
+zeroCount > k
+
+Sliding Window Template:
+Expand r
+→ If invalid, shrink l
+→ Update answer
+
+Memory Trick:
+"Find the longest subarray containing at most k zeros."
+
+
+Code
+class Solution {
+    public int longestOnes(int[] nums, int k) {
+        int l=0;
+        int r=0;
+        int n = nums.length;
+        int zeroCount=0;
+        int maxLength=0;
+
+        while(r<n){
+            if(nums[r]==0){
+                zeroCount++;
+            }
+
+            if(zeroCount>k){
+                if(nums[l]==0){
+                    zeroCount--;
+                }
+                l++;
+            }
+
+            maxLength=Math.max(r-l+1, maxLength);
+            r++;
+        }
+        return maxLength;
+    }
+}
