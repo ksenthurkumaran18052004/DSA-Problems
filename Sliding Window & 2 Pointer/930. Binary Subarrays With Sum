@@ -1,0 +1,122 @@
+930. Binary Subarrays With Sum
+
+Given a binary array nums and an integer goal, return the number of non-empty subarrays with a sum goal.
+A subarray is a contiguous part of the array.
+
+Explanation:
+Problem:
+Count the number of subarrays whose sum = goal.
+
+Key Observation:
+Directly counting sum == goal is difficult.
+
+Use:
+
+# Exactly(goal)
+
+## AtMost(goal)
+
+AtMost(goal-1)
+
+where:
+
+# AtMost(x)
+
+Number of subarrays with sum <= x
+
+---
+
+How AtMost(x) Works
+
+Use Sliding Window.
+
+Maintain:
+
+* l
+* r
+* currentSum
+
+Expand r:
+currentSum += nums[r]
+
+If:
+currentSum > x
+
+Shrink from left:
+currentSum -= nums[l]
+l++
+
+until currentSum <= x
+
+---
+
+Important Insight
+
+After shrinking:
+
+Window [l...r] is valid.
+
+Not only this window,
+
+ALL windows ending at r and starting from:
+
+l, l+1, l+2, ..., r
+
+are also valid.
+
+Number of such windows:
+
+r - l + 1
+
+Therefore:
+
+count += r - l + 1
+
+---
+
+Meaning of r-l+1
+
+It is NOT being used as a length.
+
+Think:
+
+"Number of valid subarrays ending at index r."
+
+Example:
+
+l = 2
+r = 5
+
+Possible starts:
+
+2,3,4,5
+
+Total:
+
+5 - 2 + 1 = 4
+
+So add:
+
+count += 4
+
+---
+
+Memory Trick
+
+Longest Subarray Problems:
+→ maxLen = max(maxLen, r-l+1)
+
+Counting Subarray Problems:
+→ count += r-l+1
+
+Because we count all valid subarrays ending at r.
+
+Final Formula:
+
+# Answer
+
+## AtMost(goal)
+
+AtMost(goal-1)
+
+ 
