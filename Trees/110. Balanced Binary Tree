@@ -1,0 +1,29 @@
+110. Balanced Binary Tree
+
+Balanced tree -> |leftHeight - rightHeight| <= 1
+
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        if(root==null){
+            return true;
+        }
+
+        int left= maxDepth(root.left);
+        int right = maxDepth(root.right);
+
+        if(Math.abs(right-left)<=1){
+            return isBalanced(root.left)&&isBalanced(root.right);
+        }
+        return false;
+    }
+
+    public int maxDepth(TreeNode node){
+        if(node==null){
+            return 0;
+        }
+        int left= maxDepth(node.left);
+        int right = maxDepth(node.right);
+
+        return 1+Math.max(left,right);
+    }
+}
