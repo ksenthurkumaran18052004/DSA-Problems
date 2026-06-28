@@ -1,0 +1,49 @@
+102. Binary Tree Level Order Traversal
+
+Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+Explanation:
+
+FIrst, have a arraylist to store array.
+Then have a queue to put all the traversed elements in it, so that as per the numbers in the queue we can traverse its children nodes.
+first put the root node in queue.
+then hve an array called level to store the children elements.
+for every levelkeep adding the array called level to ans;
+
+So take the curr by treenode cur = queue.poll()
+this is the element out of queue, add it to the level arr, then check the left and right children nodes, and add them to the q.
+
+fianlly return the nested arrat called ans.
+
+
+Code:
+
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if(root==null){
+            return ans;
+        }
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        while(!q.isEmpty()){
+            int size = q.size();
+            List<Integer> level = new ArrayList<>();
+
+            for(int i=0;i<size;i++){
+                TreeNode curr = q.poll();
+                level.add(curr.val);
+
+                if(curr.left!=null){
+                    q.offer(curr.left);
+                }
+                if(curr.right!=null){
+                    q.offer(curr.right);
+                }
+            }
+            ans.add(level);
+        }
+        return ans;
+    }
+}
