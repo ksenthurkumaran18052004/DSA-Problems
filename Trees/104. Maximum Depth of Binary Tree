@@ -1,0 +1,69 @@
+104. Maximum Depth of Binary Tree
+
+Given the root of a binary tree, return its maximum depth.
+A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+Explanation:
+
+FIrst, have a arraylist to store array.
+Then have a queue to put all the traversed elements in it, so that as per the numbers in the queue we can traverse its children nodes.
+first put the root node in queue.
+then hve an array called level to store the children elements.
+for every levelkeep adding depth++;
+
+So take the curr by treenode cur = queue.poll()
+this is the element out of queue, then check the left and right children nodes, and add them to the q.
+
+fianlly depth is the total depth of the tree
+
+depth is ourside because we are doing this untill q is empty.
+
+Code:
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int maxDepth(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<>();
+
+        if(root==null){
+            return 0;
+        }
+
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+
+        int depth = 0;
+
+        while(!q.isEmpty()){
+            int size = q.size();
+            List<Integer> level = new ArrayList<>();
+            depth++;
+            for(int i=0;i<size;i++){
+                TreeNode curr = q.poll();
+                level.add(curr.val);
+
+                if(curr.left!=null){
+                    q.offer(curr.left);
+                }
+                if(curr.right!=null){
+                    q.offer(curr.right);
+                }
+            }
+        }
+        return depth;
+    }
+}
