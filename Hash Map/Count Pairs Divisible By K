@@ -1,0 +1,30 @@
+Count Pairs Divisible By K
+
+Explanation:
+
+In this we need to count pairs where sum of the numbers is divisble by k;
+so instead of summign2 numbers and then checking if remainder is 0, and doing complex stuff within the hashmap, 
+we check if there is a complement in the hashmap for a particular remainder
+if a remainder is existing alreeady in hashmap, we check if its complement is also exisitng.
+
+here in hashmap we store remainder and its frequency instead of array numbers
+
+Code:
+class Solution {
+    public int countKdivPairs(int[] arr, int k) {
+        // code here
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int count=0;
+        
+        for(int num:arr){
+            int rem = num%k;
+            int complement = (k-rem)%k;
+            
+            count+=map.getOrDefault(complement,0);
+            
+            map.put(rem,map.getOrDefault(rem,0)+1);
+        }
+        
+        return count;
+    }
+}
