@@ -1,0 +1,28 @@
+Check if there are any two Equal numbers in an array at a distance less than or equal to k
+
+Explanation:
+Iterate throught the array till the point of i and check if there ar eany occurance of the equal number in the hashmap till then, 
+if so retireve the index, else put the num and its index on the map
+
+
+Code:
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        int n=nums.length;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        boolean ans=false;
+        for(int i=0;i<n;i++){
+            int num=nums[i];
+
+            if(map.containsKey(num)){
+                if(Math.abs(i-map.get(num)) <=k ){
+                    ans=true;
+                }
+            }
+
+            map.put(num,i);
+        }
+
+        return ans;
+    }
+}
