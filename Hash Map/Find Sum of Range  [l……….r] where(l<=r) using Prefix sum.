@@ -1,5 +1,20 @@
 Find Sum of Range  [l……….r] where(l<=r) using Prefix sum. 
 
+Explanation:
+In this problem, we need to find the sum of all elements between indices l and r (inclusive).
+Instead of calculating the sum every time by looping from l to r, we first create a Prefix Sum array.
+prefix[i] stores the sum of all elements from index 0 to i. 
+Formula: prefix[i] = prefix[i-1] + arr[i]
+
+Once the prefix array is built:
+    If l == 0, the required sum is simply prefix[r].
+    Otherwise, subtract the sum before index l from the sum till r:
+    Sum(l...r) = prefix[r] - prefix[l-1]
+
+This works because:
+    prefix[r] contains the sum from 0 to r.
+    prefix[l-1] contains the sum from 0 to l-1.
+    Subtracting them leaves only the sum from l to r.
 
 Code:
 class Solution {
