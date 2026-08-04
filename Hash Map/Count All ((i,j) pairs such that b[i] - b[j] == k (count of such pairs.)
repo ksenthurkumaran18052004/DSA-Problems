@@ -1,0 +1,25 @@
+Count All ((i,j) pairs such that b[i] - b[j] == k (count of such pairs.) [i<j] 
+
+Explanation:
+
+In this we need to find the number of pairs such that the ABSOLUTE difference between 2 numbers ==k.
+So we are going to check if for a number, the num+k exists in the hashmap and the num-k exists in the hasmap.
+if they exists we add it to the count.
+and then we add the current num to map by updating it.
+
+Code:
+class Solution {
+    public int countKDifference(int[] nums, int k) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int count=0;
+
+        for(int num: nums){
+            count+=map.getOrDefault(num-k,0);
+            count+=map.getOrDefault(num+k,0);
+
+            map.put(num,map.getOrDefault(num,0)+1);
+        }
+
+        return count;
+    }
+}
