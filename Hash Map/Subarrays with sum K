@@ -1,0 +1,30 @@
+Subarrays with sum K: Given an unsorted array arr[] of integers, find the number of subarrays whose sum exactly equal to a given number k.
+
+Explanation:
+
+so in this question we have ot find the number of subarrays where sum of the numbers inside is equal to k;
+but we are not going to use 2 points cause this contains negative numbers aswell..
+SO we are going to use prefix sum. In the hasmap instead of storing array numbers, we store the prefixsum of the num and its frequemcy.
+we search for the complement of the prefixsum in the hashmap and if it exists we increase the total numberof counts
+
+
+Code:
+class Solution {
+    public int cntSubarrays(int[] arr, int k) {
+        // code here
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int prefixSum=0; int count=0;
+        map.put(0,1);
+        for(int num:arr){
+            prefixSum+=num;
+            int neededSum=prefixSum-k;
+            
+            if(map.containsKey(neededSum)){
+                count+=map.get(neededSum);
+            }
+            
+            map.put(prefixSum,map.getOrDefault(prefixSum,0)+1);
+        }
+        return count;
+    }
+}
