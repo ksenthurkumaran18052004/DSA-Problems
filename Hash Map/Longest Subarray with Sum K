@@ -1,0 +1,32 @@
+Longest Subarray with Sum K
+
+In the previous question where we did subarray with Sum k, here we are going to find the longest subbary with the same sum.
+Previously we store the prefix sum with the frequency... but now we are not going to find count rather store the index of the prefix sum which has occured.
+
+
+Code:
+class Solution {
+    public int longestSubarray(int[] arr, int k) {
+        // code here
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int maxLen=0;
+        int prefix=0;
+        map.put(0,-1);
+        int len=0;
+        for(int i=0;i<arr.length;i++){
+            prefix+=arr[i];
+            int complement_prefix = prefix-k;
+            
+            if(map.containsKey(complement_prefix)){
+                len = i-map.get(complement_prefix);
+                maxLen = Math.max(maxLen,len);
+            }
+            
+            if(!map.containsKey(prefix)){
+                map.put(prefix, i);
+            }
+        }
+        
+        return maxLen;
+    }
+}
