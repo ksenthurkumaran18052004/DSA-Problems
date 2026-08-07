@@ -1,0 +1,43 @@
+Max distance between same elements
+Given an array arr[], the task is to find the maximum distance between two occurrences of an element. 
+If no element has two occurrences, then return 0.
+
+Logic
+
+We create a HashMap<element, firstIndex>.
+If the element is seen for the first time, store its index.
+If the element is seen again:
+Do not update the HashMap.
+
+Calculate the distance using:
+currentIndex - firstIndex
+Update the maximum distance if needed.
+
+The important point is:
+Never replace the first occurrence in the HashMap.
+
+Why?
+Because we want
+last occurrence - first occurrence
+If you overwrite the first index, you'll lose the maximum possible distance.
+
+Code:
+
+class Solution {
+    public int maxDistance(int[] arr) {
+        // Code here
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int maxDistance=0;
+        for(int i=0;i<arr.length;i++){
+            int num=arr[i];
+            if(!map.containsKey(num)){
+                map.put(num,i);
+            }
+            else{
+                maxDistance = Math.max(maxDistance, Math.abs(i-map.get(num)));
+            } 
+        }
+        
+        return maxDistance;
+    }
+}
