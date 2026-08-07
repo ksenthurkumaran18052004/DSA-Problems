@@ -1,0 +1,76 @@
+1031. Maximum Sum of Two Non-Overlapping Subarrays
+
+Given an integer array nums and two integers firstLen and secondLen, return the maximum sum of elements in two non-overlapping subarrays with lengths firstLen and secondLen.
+The array with length firstLen could occur before or after the array with length secondLen, but they have to be non-overlapping.
+
+Explanation:
+
+Finding the maximum firstLen window and maximum secondLen window separately doesn't work, because they may overlap.
+Instead, fix one window and keep track of the best window before it.
+
+Idea: 
+Suppose the current window is the secondLen window.
+
+AAA | BB
+AAA = firstLen window
+BB = secondLen window
+
+For every position of BB, we store:
+  bestFirst = Maximum sum of any firstLen window before BB
+  Then, Answer = bestFirst + currentSecondWindow
+  Update the maximum answer.
+
+bestFirst: It is not the current first window. 
+  It is:
+    The best firstLen window seen so far.
+    Update it every iteration:
+    bestFirst = Math.max(bestFirst, firstSum);
+
+Why Prefix Sum?
+
+  To get any window sum in O(1).
+  Window Sum = prefix[r+1] - prefix[l]
+
+Why two passes?
+  The answer can be:   [firstLen] ..... [secondLen]
+                                    or
+                       [secondLen] ..... [firstLen]
+
+                      So solve both and take the maximum.
+
+Algorithm
+Build Prefix Sum.
+Slide the second window.
+Keep updating bestFirst.
+ans = max(ans, bestFirst + currentSecondWindow)
+Repeat by swapping the window sizes.
+
+Code:
+
+class Solution {
+    public int maxSumTwoNoOverlap(int[] nums, int firstLen, int secondLen) {
+        int n = nums.length;
+        int[] prefix = new int[n+1];
+        for(int i=0;i<n;i++){
+            prefix[i+1]=prefix[i]+nums[i];
+        }
+
+        return Math.max(
+            helper(prefix,firstLen,secondLen), helper(prefix,secondLen,firstLen)
+        );
+    }
+
+    public int helper(int[] prefix , int firstLen, int secondLen){
+        int bestFirst=0; int sum=0;
+    	int n = prefix.length;
+        for(int i=firstLen;i<n-secondLen;i++){
+            int firstSum=prefix[i]-prefix[i-firstLen];
+            bestFirst = Math.max(bestFirst, firstSum);
+
+            int secondSum = prefix[i+secondLen]-prefix[i];
+
+            sum = Math.max(sum, bestFirst+secondSum);
+        }
+        return sum;
+    }
+}
