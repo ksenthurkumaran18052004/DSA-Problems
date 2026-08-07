@@ -1,0 +1,29 @@
+Piles of Boxes
+https://docs.google.com/document/d/1k0mOvFj-PT6LvbUjTrw9O-u7lHAMrAUMu2vE7VLp5F0/edit?tab=t.0
+Intuition: In one operation, we can only reduce the tallest pile to the next tallest height.
+Since we can only decrease heights, all piles will eventually become equal to the smallest height.
+Whenever the height changes while moving from right to left,
+all taller piles must be reduced one more time.
+
+Code: 
+class Solution {
+
+    public static long pilesOfBoxes(int[] boxesInPiles) {
+
+        Arrays.sort(boxesInPiles);
+
+        long steps = 0;
+        int n = boxesInPiles.length;
+
+        for(int i = n - 1; i > 0; i--){
+
+            if(boxesInPiles[i] != boxesInPiles[i - 1]){
+
+                steps += (n - i);
+
+            }
+        }
+
+        return steps;
+    }
+}
