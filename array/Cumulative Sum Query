@@ -1,0 +1,53 @@
+Cumulative Sum Query
+
+You are given a list of N numbers and Q queries. Each query is specified by two numbers i and j; 
+the answer to each query is the sum of every number between the range [i, j] (inclusive).
+
+Explanation:
+
+see what to do is in the given array with the gven range list of i and j, i have to find the sum of elements from i to j
+so what we do is we create a prefix sum array for all elements 
+then we calculate prefix[r] - prefix [l-1]
+
+Code:
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+
+        long[] prefix = new long[n];
+
+        for (int i = 0; i < n; i++) {
+            int num = sc.nextInt();
+
+            if (i == 0)
+                prefix[i] = num;
+            else
+                prefix[i] = prefix[i - 1] + num;
+        }
+
+        int q = sc.nextInt();
+
+        while (q-- > 0) {
+            int l = sc.nextInt();
+            int r = sc.nextInt();
+
+            // Handle cases where l > r
+            if (l > r) {
+                int temp = l;
+                l = r;
+                r = temp;
+            }
+
+            if (l == 0)
+                System.out.println(prefix[r]);
+            else
+                System.out.println(prefix[r] - prefix[l - 1]);
+        }
+
+        sc.close();
+    }
+}
