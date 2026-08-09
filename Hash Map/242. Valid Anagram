@@ -1,0 +1,46 @@
+242. Valid Anagram
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+Anagram means - consider word s , all letters of word s should be used to make word t. s.length()==t.length()
+
+Explanation:
+
+we have 2 string s and t.
+put leeters of S with the frequency in the hashmap.
+Iterate the leeters through t, and check if they are present in the hashmap of s.
+if they are not present immediately return false.
+Supose if they are present reduce their frequency in the map.
+Now check if the frequency of letter of t is 0, if so remove the leeter from hashmap.
+Finnaly outside check if map is empty... if map is empty its true cause all letters are present in t and they have bee crossed out.
+else false
+
+Code:
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if(s.length()!=t.length()){
+            return false;
+        }
+
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(char ch: s.toCharArray()){
+            map.put(ch,map.getOrDefault(ch,0)+1);
+        }
+
+        for(char ch: t.toCharArray()){
+            if(!map.containsKey(ch)){
+                return false;
+            }
+
+            map.put(ch,map.get(ch)-1);
+            if(map.get(ch)==0){
+                map.remove(ch);
+            }
+        }
+        
+        if(map.isEmpty()){
+            return true;
+        }
+        
+        return false;
+    }
+}
