@@ -7,7 +7,12 @@ but store unique prefixSum cause we only want the first occurance to count the l
 after that reset prefix sum.
 again start iterating and saving prefixsum, 
 check if right away the prefixSum==0, then maxLength=i+1.
-again with if condition check if map contains prefixSum that was just calculated, then calculate the longestLength based on the index
+again with if condition check if map contains prefixSum that was just calculated
+(THis is just because suppose if prefix sum repeats itself, then subarray sum is 0
+{15 -2 2} - consider this array... Prefix sum is {15, 13, 15}... here prefixSum is not 0, but {-2,2} has subbary sum 0...
+we also notice that subbary sum repeats itself 15->15...So length -> 2-0 = 2.... so longest subarray Length =2 
+)
+, then calculate the longestLength based on the index
 
 Code:
 
@@ -27,9 +32,11 @@ class Solution {
         prefixSum=0; int longestLength = 0;
         for(int i=0;i<n;i++){
             prefixSum+=arr[i];
+            // Case 1: Prefix Sum itself is 0
             if(prefixSum==0){
                 longestLength = Math.max(longestLength, i+1);
             }
+            // Case 2: Prefix Sum repeats itself - then still it shows subarray with sum 0
             if(map.containsKey(prefixSum)){
                 int firstIndex = map.get(prefixSum);
                 int length = i- firstIndex;
