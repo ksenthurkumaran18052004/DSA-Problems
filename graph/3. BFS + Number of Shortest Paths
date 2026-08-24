@@ -1,0 +1,73 @@
+3. BFS + Number of Shortest Paths
+
+Now we want:
+
+How many shortest paths exist from the source to each node?
+
+Add:
+
+int[] ways = new int[n + 1];
+
+Initialize:
+
+ways[start] = 1;
+
+Why 1?
+
+There is exactly one way to be at the starting node — start there.
+
+Code
+void bfs(int start, ArrayList<Integer>[] graph, int n) {
+
+    boolean[] visited = new boolean[n + 1];
+
+    int[] level = new int[n + 1];
+    int[] ways = new int[n + 1];
+
+    Queue<Integer> q = new LinkedList<>();
+
+    q.add(start);
+
+    visited[start] = true;
+    level[start] = 0;
+    ways[start] = 1;
+
+    while(!q.isEmpty()) {
+
+        int node = q.poll();
+
+        for(int neighbour : graph[node]) {
+
+            // First time reaching neighbour
+            if(!visited[neighbour]) {
+
+                visited[neighbour] = true;
+
+                level[neighbour] = level[node] + 1;
+
+                ways[neighbour] = ways[node];
+
+                q.add(neighbour);
+            }
+
+            // Another shortest path to neighbour
+            else if(level[neighbour] == level[node] + 1) {
+
+                ways[neighbour] += ways[node];
+            }
+        }
+    }
+}
+The two important cases
+
+First time:
+
+ways[neighbour] = ways[node];
+
+Already visited, but another shortest path:
+
+ways[neighbour] += ways[node];
+
+Only if:
+
+level[neighbour] == level[node] + 1
