@@ -1,0 +1,46 @@
+Same idea as normal BFS.
+
+Instead of: level[node]
+we use: int[][] dist = new int[n][m];
+
+Code:
+
+int[][] dist = new int[n][m];
+boolean[][] visited = new boolean[n][m];
+Queue<int[]> q = new LinkedList<>();
+q.add(new int[]{sr, sc});
+
+visited[sr][sc] = true;
+dist[sr][sc] = 0;
+
+int[] dr = {-1, 1, 0, 0};
+int[] dc = {0, 0, -1, 1};
+
+while(!q.isEmpty()) {
+
+    int[] cell = q.poll();
+
+    int r = cell[0];
+    int c = cell[1];
+
+    for(int i = 0; i < 4; i++) {
+        int nr = r + dr[i];
+        int nc = c + dc[i];
+
+        if(nr < 0 || nr >= n ||
+           nc < 0 || nc >= m) {
+            continue;
+        }
+
+        if(visited[nr][nc]) {
+            continue;
+        }
+
+        visited[nr][nc] = true;
+        dist[nr][nc] = dist[r][c] + 1;
+        q.add(new int[]{nr, nc});
+    }
+}
+
+Key line dist[nr][nc] = dist[r][c] + 1;
+Exactly equivalent to: level[neighbour] = level[node] + 1;
