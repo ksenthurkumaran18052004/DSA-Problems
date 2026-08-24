@@ -1,0 +1,41 @@
+2. BFS + Shortest Distance
+
+For an unweighted graph, BFS gives the shortest distance.
+
+Add:  int[] level = new int[n + 1];
+
+Code:
+
+void bfs(int start, ArrayList<Integer>[] graph, int n) {
+
+    boolean[] visited = new boolean[n + 1];
+    int[] level = new int[n + 1];
+
+    Queue<Integer> q = new LinkedList<>();
+
+    q.add(start);
+    visited[start] = true;
+    level[start] = 0;
+
+    while(!q.isEmpty()) {
+        int node = q.poll();
+        for(int neighbour : graph[node]) {
+            if(!visited[neighbour]) {
+                visited[neighbour] = true;
+                level[neighbour] = level[node] + 1;
+                q.add(neighbour);
+            }
+        }
+    }
+}
+
+
+Remember: level[neighbour] = level[node] + 1;
+means: Neighbour is one edge farther from the source.
+
+So:
+
+level[source] = 0
+level[neighbours] = 1
+level[their neighbours] = 2
+...
