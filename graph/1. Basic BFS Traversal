@@ -1,0 +1,46 @@
+1. Basic BFS Traversal
+
+Idea:
+Use Queue
+Use visited[]
+Start from a source node
+Visit all neighbours
+Then visit their neighbours
+
+void bfs(int start, ArrayList<Integer>[] graph, int n) {
+
+    boolean[] visited = new boolean[n + 1];
+
+    Queue<Integer> q = new LinkedList<>();
+
+    q.add(start);
+    visited[start] = true;
+
+    while(!q.isEmpty()) {
+
+        int node = q.poll();
+
+        System.out.println(node);
+
+        for(int neighbour : graph[node]) {
+
+            if(!visited[neighbour]) {
+
+                visited[neighbour] = true;
+                q.add(neighbour);
+            }
+        }
+    }
+}
+
+Core pattern:
+Queue
+  ↓
+take node
+  ↓
+visit neighbours
+  ↓
+unvisited → mark + add to queue
+
+Time: O(N + M)
+Space: O(N + M) for graph + BFS structures.
