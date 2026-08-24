@@ -1,0 +1,49 @@
+4. BFS + Maximum Value Among Shortest Paths
+
+Now each node has a value:
+int[] value;
+
+We want: Among all shortest paths, what is the maximum total value?
+
+Add: int[] best = new int[n + 1];
+
+Code:
+
+void bfs(int start, ArrayList<Integer>[] graph,
+         int[] value, int n) {
+
+    boolean[] visited = new boolean[n + 1];
+    int[] level = new int[n + 1];
+    int[] best = new int[n + 1];
+
+    Queue<Integer> q = new LinkedList<>();
+
+    q.add(start);
+
+    visited[start] = true;
+    level[start] = 0;
+    best[start] = value[start];
+
+    while(!q.isEmpty()) {
+
+        int node = q.poll();
+        for(int neighbour : graph[node]) {
+            // First time reaching neighbour
+            if(!visited[neighbour]) {
+                visited[neighbour] = true;
+                level[neighbour] = level[node] + 1;
+                best[neighbour] = best[node] + value[neighbour];
+                q.add(neighbour);
+            }
+            // Another shortest path
+            else if(level[neighbour] == level[node] + 1) {
+                best[neighbour] = Math.max(best[neighbour],best[node] + value[neighbour]);
+            }
+        }
+    }
+}
+
+Core idea
+level → shortest distance
+ways → number of shortest paths
+best → maximum value among shortest paths
