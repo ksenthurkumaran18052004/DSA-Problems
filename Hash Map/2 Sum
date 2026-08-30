@@ -1,0 +1,19 @@
+Two Sum - Pair with Given Sum
+Given an array arr[] of integers and another integer target. Determine if there exist two distinct indices such that the sum of their elements is equal to the target.
+
+class Solution {
+    boolean twoSum(int arr[], int target) {
+        // code here
+        boolean ans = false;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<arr.length;i++){
+            int needed= target-arr[i];
+            if(map.containsKey(needed)){
+                ans=true;
+                return ans;
+            }
+            map.put(arr[i],i);
+        }
+        return ans;
+    }
+}
