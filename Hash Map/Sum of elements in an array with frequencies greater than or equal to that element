@@ -1,0 +1,25 @@
+Sum of elements in an array with frequencies greater than or equal to that element
+
+public static int sumOfElements(int[] arr, int n)
+    {
+
+        HashMap<Integer, Integer> m = new HashMap<Integer, Integer>();
+        for (int i = 0; i < n; i++) {
+            if (m.containsKey(arr[i])) {
+                m.put(arr[i], m.get(arr[i]) + 1);
+            }
+            else {
+                m.put(arr[i], 1);
+            }
+        }
+
+        int sum = 0;
+
+        for (Integer key : m.keySet()) {
+            // Calculate the sum of elements having frequencies greater than or equal to the element itself
+            if (m.get(key) >= key) {
+                sum += key;
+            }
+        }
+        return sum;
+    }
