@@ -1,0 +1,26 @@
+Array Subset
+Given two arrays a[] and b[], your task is to determine whether b[] is a subset of a[].
+
+Explanation:
+from a put all in hashmap with count
+from b check if element is present and if the frequency is not 0 - this is true
+else false
+just update the count in hashmap of array a- cause we r tallying the frequencies of the element
+
+class Solution {
+    public boolean isSubset(int a[], int b[]) {
+        // code here
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<a.length;i++){
+            map.put(a[i],map.getOrDefault(a[i],0)+1);
+        }
+        for(int i=0;i<b.length;i++){
+            if(!map.containsKey(b[i]) || map.get(b[i])==0){
+                return false;
+            }
+            map.put(b[i],map.get(b[i])-1);
+        }
+        
+        return true;
+    }
+}
