@@ -1,0 +1,36 @@
+Minimum operation to make all elements equal in array
+
+Given an array consisting of n positive integers, the task is to find the minimum number of operations to make all elements equal. 
+In each operation, we can perform addition, multiplication, subtraction, or division with any number and an array element. 
+
+Explanaton:
+
+The key idea 🧠:  You can change any one element in exactly 1 operation to become whatever value you want.
+So the question becomes: Which value already appears the most times?
+Because we should keep those elements unchanged and modify everything else.
+
+Code:
+
+static int minOperations(int[] arr) {
+        int n = arr.length;
+        // Maximum possible operations would be n
+        int minOps = n;
+
+        // Try each element as the potential final value
+        for (int i = 0; i < n; i++) {
+            int currOps = 0;
+
+            // Count how many elements are different from
+            // arr[i]
+            for (int j = 0; j < n; j++) {
+                if (arr[i] != arr[j]) {
+                    currOps++;
+                }
+            }
+
+            // Update minimum operations
+            minOps = Math.min(minOps, currOps);
+        }
+
+        return minOps;
+    }
