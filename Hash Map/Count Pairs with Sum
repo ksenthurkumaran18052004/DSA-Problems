@@ -1,0 +1,29 @@
+Count Pairs with Sum
+You are given an array arr[] and an integer target. You have to count all pairs in the array such that their sum is equal to the given target.
+
+Explanation:
+For each element, calculate needed = target - arr[i].
+The HashMap stores how many times each previous element has appeared, 
+so if needed exists, add its frequency to count — each previous occurrence forms a valid pair.
+
+count += map.getOrDefault(needed, 0);
+map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
+
+The important part: we count every previous occurrence of needed, not just whether it exists.
+
+Code:
+class Solution {
+    int countPairs(int arr[], int target) {
+        // code here
+        int count=0;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<arr.length;i++){
+            int needed = target-arr[i];
+            if(map.containsKey(needed)){
+                count+=map.get(needed);
+            }
+            map.put(arr[i],map.getOrDefault(arr[i], 0) + 1);
+        }
+        return count;
+    }
+}
