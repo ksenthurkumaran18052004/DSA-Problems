@@ -1,0 +1,33 @@
+974. Subarray Sums Divisible by K
+Given an integer array nums and an integer k, return the number of non-empty subarrays that have a sum divisible by k.
+
+Explanation:
+The same logic as before for divisible by k;
+So we are going to store the number of times the remainder appears in the hashmap as we are going to take the count
+Key Idea — Same Remainder
+
+If two prefix sums have the same remainder when divided by k, subtracting them cancels the remainders, so their difference (the subarray sum) is divisible by k.
+Therefore, store remainder → frequency in the HashMap. If the current remainder has appeared x times, it forms x valid subarrays → count += x.
+
+
+Code:
+class Solution {
+    public int subarraysDivByK(int[] nums, int k) {
+        int count=0;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int prefixSum=0; map.put(0,1);
+        for(int i=0;i<nums.length;i++){
+            prefixSum+=nums[i];
+            int rem = prefixSum%k;
+            if(rem<0){
+                rem+=k;
+            }
+            if(map.containsKey(rem)){
+                count+=map.get(rem);
+            }
+
+            map.put(rem,map.getOrDefault(rem,0)+1);
+        }
+        return count;
+    }
+}
