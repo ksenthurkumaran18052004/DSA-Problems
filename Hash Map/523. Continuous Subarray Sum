@@ -1,0 +1,29 @@
+523. Continuous Subarray Sum
+
+Key Idea — Same Remainder
+For a subarray sum to be a multiple of k, its sum must have remainder 0 when divided by k.
+If two prefix sums have the same remainder, their difference (the subarray between them) is divisible by k.
+Remember: prefixSum % k → store remainder in HashMap → same remainder = valid subarray.
+
+Code:
+class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        int count=0;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int prefixSum=0; map.put(0,-1);
+        for(int i=0;i<nums.length;i++){
+            int num = nums[i];
+            prefixSum+=num;
+            int rem= prefixSum%k;
+            if(map.containsKey(rem)){
+                if(i-map.get(rem) >=2){
+                    return true;
+                }
+            }
+            else{
+                map.put(rem,i);
+            }
+        }
+        return false;
+    }
+}
