@@ -58,7 +58,8 @@ class Solution {
                 curr.put(ch,curr.getOrDefault(ch,0)+1);
             }
 
-            // For each word in main map, check if it exists in the curr map, if so put the minimum frequency. For a character to be common, the answer can contain only as many copies as the word with the fewest copies.
+            // For each word in main map, check if it exists in the curr map, if so put the minimum frequency. 
+            // For a character to be common, the answer can contain only as many copies as the word with the fewest copies.
             
             for(char ch: map.keySet()){
                 if(curr.containsKey(ch)){
