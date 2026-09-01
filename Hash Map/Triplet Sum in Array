@@ -1,0 +1,32 @@
+Triplet Sum in Array:
+Given an array arr[] and an integer target, determine if there exists a triplet in the array whose sum equals the given target.
+Return true if such a triplet exists, otherwise, return false.
+
+Explanation:
+take a number - put it in a hahsmap inside the for loop 
+calculate the needed2 ( which is basically the sum of other 2 nums)
+again runa  for loop and check by needed = needed2- arr[i] (the last exisitng single number)
+if it exisits in hashmap well and good
+other wise it is false
+just add the arr[j] to the hashmap
+
+Code:
+class Solution {
+    public boolean hasTripletSum(int arr[], int target) {
+        // code Here
+        for(int i=0;i<arr.length;i++){
+            int num = arr[i];
+            HashMap<Integer,Integer> map = new HashMap<>();
+            int needed2 = target - num;
+            
+            for(int j=i+1;j<arr.length;j++){
+                int needed3 = needed2 - arr[j];
+                if(map.containsKey(needed3)){
+                    return true;
+                }
+                map.put(arr[j],1);
+            }
+        }
+        return false;
+    }
+}
