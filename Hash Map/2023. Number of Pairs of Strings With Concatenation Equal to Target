@@ -1,0 +1,35 @@
+2023. Number of Pairs of Strings With Concatenation Equal to Target
+Given an array of digit strings nums and a digit string target, return the number of pairs of indices (i, j) (where i != j) 
+such that the concatenation of nums[i] + nums[j] equals target.
+
+Explanation:
+THe logic is we stroe te str and its length in the hashmap
+we check from start and end cause concatenation can happen both sides
+other than that it is the regular subarray hahsmap kind of problem
+
+Code:
+class Solution {
+    public int numOfPairs(String[] nums, String target) {
+        HashMap<String,Integer> map = new HashMap<>();
+        int count=0; 
+
+        for(String str: nums){
+            if(target.endsWith(str)){
+                String needed = target.substring(0,target.length()-str.length());
+                if(map.containsKey(needed)){
+                    count+=map.get(needed);
+                }
+            }
+
+            if(target.startsWith(str)){
+                String needed = target.substring(str.length());
+                if(map.containsKey(needed)){
+                    count+=map.get(needed);
+                }
+            }
+            map.put(str,map.getOrDefault(str,0)+1);
+        }
+
+        return count;
+    }
+}
