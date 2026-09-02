@@ -1,0 +1,58 @@
+Closest Sum Pair Across Two Arrays
+
+Given two sorted arrays arr1[] and arr2[] of size n and m and a number x, find the pair whose sum is closest to x and the pair has an element 
+from each array. In the case of multiple closest pairs return any one of them.
+
+Explanation:
+Closest Pair — Two Pointer Idea
+
+Sorted arrays → use two pointers from opposite ends.
+
+left = 0 → smallest element of arr1
+right = arr2.length - 1 → largest element of arr2
+This gives us control in both directions:
+  sum < x → need a bigger sum → left++
+  sum > x → need a smaller sum → right--
+At every step, check |sum - x| and keep the minimum.
+
+Why opposite ends?
+If both pointers started from the left, both movements would only increase the sum. 
+Starting from opposite ends lets one pointer increase the sum and the other decrease it.
+
+Think: “I need to move the sum toward x — which pointer can help me do that?”
+
+
+Code:
+class Solution {
+    public static ArrayList<Integer> findClosestPair(int arr1[], int arr2[], int x) {
+        // code here
+        int left=0;
+        int right= arr2.length-1;
+        int bestA=0;
+        int bestB = 0;
+        int minDiff = Integer.MAX_VALUE;
+        ArrayList<Integer> ans =new ArrayList<>();
+        
+        while(left<arr1.length && right>=0){
+            int sum = arr1[left]+arr2[right];
+            int diff = Math.abs(x-sum);
+            
+            if(diff<minDiff){
+                minDiff = diff;
+                bestA = arr1[left];
+                bestB = arr2[right];
+            }
+            
+            if(sum<x){
+                left++;
+            }
+            else{
+                right--;
+            }
+            
+        }
+        
+        ans.add(bestA); ans.add(bestB);
+        return ans;
+    }
+}
