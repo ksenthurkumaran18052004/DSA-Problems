@@ -1,0 +1,42 @@
+977. Squares of a Sorted Array
+
+Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+
+Explaantion:
+
+This is a 2pointer problem
+keep a ans array with left and pos index to traverse
+trvaerse from left <=right
+take the number on the left and take a number on right
+check if abs(left)>abs(right)
+if so add the square of left on the last part of the ans array and l++- cause we need to return the sorted array
+the biggest element goes into the end
+likewise check and do for nums[r] > nums[l] with r++
+
+and then move the pos index one step back
+
+
+
+Code:
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+        int left=0; int right=nums.length-1;
+        int[] ans = new int[nums.length];
+        int pos=nums.length-1;;
+
+        while(left<=right){
+            int numL = nums[left];
+            int numR = nums[right];
+            if(Math.abs(numL) >= Math.abs(numR)){
+                ans[pos] = numL * numL;
+                left++;
+            }
+            else if(Math.abs(numL) < Math.abs(numR)){
+                ans[pos] = numR* numR;
+                right--;
+            }
+            pos--;
+        }
+        return ans;
+    }
+}
